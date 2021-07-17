@@ -1,15 +1,23 @@
 package sample
 
-import "fmt"
+import (
+	"fmt"
+	"sample/cfg"
+)
 
 type Sample struct {
+	config *cfg.Config
 }
 
-func New() *Sample {
-	return &Sample{}
+func New(config *cfg.Config) *Sample {
+	return &Sample{
+		config: config,
+	}
 }
 
 func (s *Sample) Run() error {
 	fmt.Println("hello world")
+	fmt.Println(s.config)
 	return nil
+	//return fmt.Errorf("wot")
 }
