@@ -59,14 +59,16 @@ func loadAndValidateConfig(args []string) (*sample.Config, error) {
 	return &sample.Config{
 		LogLevel: logLevel,
 	}, nil
-
 }
 
 func run(cmd *cobra.Command, args []string) {
 	config, err := loadAndValidateConfig(args)
 	cobra.CheckErr(err)
 
-	err = sample.New(config).Run()
+	app, err := sample.New(config)
+	cobra.CheckErr(err)
+
+	err = app.Run()
 	cobra.CheckErr(err)
 }
 
