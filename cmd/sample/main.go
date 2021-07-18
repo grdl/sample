@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"sample"
 
 	"github.com/spf13/cobra"
@@ -13,7 +12,7 @@ var cmd = &cobra.Command{
 	Use:          "sample",
 	Short:        "Sample application",
 	Version:      sample.Version(),
-	RunE:         run,
+	Run:          run,
 	SilenceUsage: true, // We don't want to show usage on legit errors
 }
 
@@ -57,25 +56,20 @@ func loadAndValidateConfig(args []string) (*sample.Config, error) {
 		return nil, fmt.Errorf("level flag contains invalid value; valid values: %v", validLogLevels)
 	}
 
-	config := &sample.Config{
+	return &sample.Config{
 		LogLevel: logLevel,
-	}
+	}, nil
 
-	return config, nil
 }
 
-func run(cmd *cobra.Command, args []string) error {
+func run(cmd *cobra.Command, args []string) {
 	config, err := loadAndValidateConfig(args)
-	if err != nil {
-		return err
-	}
+	cobra.CheckErr(err)
 
-	app := sample.New(config)
-	return app.Run()
+	err = sample.New(config).Run()
+	cobra.CheckErr(err)
 }
 
 func main() {
-	if err := cmd.Execute(); err != nil {
-		os.Exit(1)
-	}
+	cobra.CheckErr(cmd.Execute())
 }

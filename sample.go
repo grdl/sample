@@ -21,6 +21,6 @@ func New(config *Config) *Sample {
 func (s *Sample) Run() error {
 	fmt.Println("hello world")
 	fmt.Println(s.config)
-	return nil
-	//return fmt.Errorf("wot")
+	return fmt.Errorf("wot")
+	//return nil
 }
