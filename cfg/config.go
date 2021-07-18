@@ -2,6 +2,7 @@ package cfg
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -27,21 +28,21 @@ func Version() string {
 }
 
 type Config struct {
-	DryRun bool
+	LogLevel string
 }
 
 // Load returns a Config populated with values from flags, env variables and config file.
 // If config can't be loaded or values are invalid, an error is returned.
 func Load(cmd *cobra.Command, args []string) (*Config, error) {
-	err := initViper()
+	err := initViper(cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	return loadAndValidateConfig(cmd, args)
+	return loadAndValidateConfig(args)
 }
 
-func initViper() error {
+func initViper(cmd *cobra.Command) error {
 	vip = viper.New()
 
 	vip.AutomaticEnv()
@@ -52,26 +53,28 @@ func initViper() error {
 
 	err := vip.ReadInConfig()
 	// Ignore error if config file is not found, default to env vars
-	if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-		return nil
+	if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		return err
 	}
 
+	err = vip.BindPFlags(cmd.PersistentFlags())
 	return err
 }
 
-func loadAndValidateConfig(cmd *cobra.Command, args []string) (*Config, error) {
-	err := vip.BindPFlag("dry-run", cmd.PersistentFlags().Lookup("dry-run"))
-	if err != nil {
-		return nil, err
+func loadAndValidateConfig(args []string) (*Config, error) {
+	logLevel := vip.GetString("level")
+	validLogLevels := map[string]struct{}{
+		"info":  {},
+		"error": {},
+		"debug": {},
 	}
 
-	dryRun := vip.GetBool("dry-run")
-	if dryRun == true {
-		return nil, fmt.Errorf("dry-run flag can't be true")
+	if _, ok := validLogLevels[logLevel]; !ok {
+		return nil, fmt.Errorf("level flag contains invalid value; valid values: %v", validLogLevels)
 	}
 
 	config := &Config{
-		DryRun: dryRun,
+		LogLevel: logLevel,
 	}
 
 	return config, nil

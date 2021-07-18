@@ -18,7 +18,7 @@ var cmd = &cobra.Command{
 func init() {
 	cmd.PersistentFlags().BoolP("help", "h", false, "Print this help and exit")
 	cmd.PersistentFlags().BoolP("version", "v", false, "Print version and exit")
-	cmd.PersistentFlags().BoolP("dry-run", "y", false, "Dry run - print output without changing anything")
+	cmd.PersistentFlags().StringP("level", "l", "info", "Log level [error, info, debug]")
 }
 
 func run(cmd *cobra.Command, args []string) error {
