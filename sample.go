@@ -2,14 +2,17 @@ package sample
 
 import (
 	"fmt"
-	"sample/cfg"
 )
 
-type Sample struct {
-	config *cfg.Config
+type Config struct {
+	LogLevel string
 }
 
-func New(config *cfg.Config) *Sample {
+type Sample struct {
+	config *Config
+}
+
+func New(config *Config) *Sample {
 	return &Sample{
 		config: config,
 	}
