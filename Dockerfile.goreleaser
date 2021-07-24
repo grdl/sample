@@ -1,0 +1,7 @@
+# This Dockerfile is intended to be used with goreleaser.
+# It doesn't build anything, it expects the binaries to be already built by the goreleaser.
+
+FROM alpine:3.14
+COPY sample /
+USER nobody
+ENTRYPOINT ["/sample"]

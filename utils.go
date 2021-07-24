@@ -22,7 +22,11 @@ func Version() string {
 		return "development"
 	}
 
-	return fmt.Sprintf("%s - revision %s built at %s", version, commit[:6], date)
+	if len(commit) > 6 {
+		commit = commit[:6]
+	}
+
+	return fmt.Sprintf("%s - revision %s built at %s", version, commit, date)
 }
 
 // Logger return a zap.SugaredLogger configured with a specified log level.
