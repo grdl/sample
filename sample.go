@@ -10,12 +10,31 @@ type Config struct {
 	LogLevel string
 }
 
+func (c *Config) validate() error {
+	validLogLevels := map[string]struct{}{
+		"info":  {},
+		"error": {},
+		"debug": {},
+	}
+
+	if _, ok := validLogLevels[c.LogLevel]; !ok {
+		return fmt.Errorf("level flag contains invalid value; valid values: %v", validLogLevels)
+	}
+
+	return nil
+}
+
 type Sample struct {
 	config *Config
 	logger *zap.SugaredLogger
 }
 
 func New(config *Config) (*Sample, error) {
+	err := config.validate()
+	if err != nil {
+		return nil, err
+	}
+
 	logger, err := Logger(config.LogLevel)
 	if err != nil {
 		return nil, err

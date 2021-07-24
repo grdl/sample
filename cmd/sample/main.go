@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sample"
 
 	"github.com/spf13/cobra"
@@ -44,32 +43,15 @@ func initConfig() {
 	cobra.CheckErr(err)
 }
 
-func loadAndValidateConfig(args []string) (*sample.Config, error) {
-	logLevel := vip.GetString("level")
-	validLogLevels := map[string]struct{}{
-		"info":  {},
-		"error": {},
-		"debug": {},
-	}
-
-	if _, ok := validLogLevels[logLevel]; !ok {
-		return nil, fmt.Errorf("level flag contains invalid value; valid values: %v", validLogLevels)
-	}
-
-	return &sample.Config{
-		LogLevel: logLevel,
-	}, nil
-}
-
 func run(cmd *cobra.Command, args []string) {
-	config, err := loadAndValidateConfig(args)
-	cobra.CheckErr(err)
+	config := &sample.Config{
+		LogLevel: vip.GetString("level"),
+	}
 
 	app, err := sample.New(config)
 	cobra.CheckErr(err)
 
-	err = app.Run()
-	cobra.CheckErr(err)
+	cobra.CheckErr(app.Run())
 }
 
 func main() {
