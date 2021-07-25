@@ -4,7 +4,10 @@ on:
   push:
     tags-ignore:
       - '**'
-  pull_request
+  pull_request:
+    paths:
+      - '**'
+
 
 jobs:
   build_and_test:
