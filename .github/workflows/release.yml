@@ -27,6 +27,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist
+          args: release --rm-dist --release-notes <(sed -n '/^## \[${GITHUB_REF##*/}\]/,/^## \[/{//!p;}' CHANGELOG.md | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba')
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
