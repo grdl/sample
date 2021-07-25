@@ -42,26 +42,26 @@ release:
     owner: grdl
     name: sample
 
-brews:
-  - name: sample
-    tap:
-      owner: grdl
-      name: homebrew-tap
-    commit_author:
-      name: Greg Dlugoszewski
-      email: greg@grdl.dev
-    folder: Formula
-    homepage: https://github.com/grdl/sample/
-    description: "Sample :golang: Go application to be used as a base template for other projects."
-    test: |
-      system "sample --version"
-    install: |
-      bin.install "sample"
-
-dockers:
-  - dockerfile: Dockerfile.goreleaser
-    goos: linux
-    goarch: amd64
-    image_templates:
-      - "grdl/sample:{{ .Tag }}"
-      - "grdl/sample:latest"
+#brews:
+#  - name: sample
+#    tap:
+#      owner: grdl
+#      name: homebrew-tap
+#    commit_author:
+#      name: Greg Dlugoszewski
+#      email: greg@grdl.dev
+#    folder: Formula
+#    homepage: https://github.com/grdl/sample/
+#    description: "Sample :golang: Go application to be used as a base template for other projects."
+#    test: |
+#      system "sample --version"
+#    install: |
+#      bin.install "sample"
+#
+#dockers:
+#  - dockerfile: Dockerfile.goreleaser
+#    goos: linux
+#    goarch: amd64
+#    image_templates:
+#      - "grdl/sample:{{ .Tag }}"
+#      - "grdl/sample:latest"
