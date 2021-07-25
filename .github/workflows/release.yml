@@ -25,7 +25,7 @@ jobs:
           echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
       - name: Generate release notes
         run: |
-          sed -n '/^## \[${GITHUB_REF##*/}\]/,/^## \[/{//!p;}' CHANGELOG.md | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' > /tmp/release_notes
+          sed -n '/^## \['${GITHUB_REF##*\/}'\]/,/^## \[/{//!p;}' CHANGELOG.md | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' > /tmp/release_notes
           cat /tmp/release_notes
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
