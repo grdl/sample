@@ -17,7 +17,6 @@ builds:
       - darwin
       - windows
 
-
 archives:
   - id: archive
     builds:
@@ -61,3 +60,11 @@ brews:
       system "sample --version"
     install: |
       bin.install "sample"
+
+dockers:
+  - dockerfile: Dockerfile.goreleaser
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "grdl/sample:{{ .Tag }}"
+      - "grdl/sample:latest"
