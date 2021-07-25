@@ -14,5 +14,9 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# .env file
+# .env file with configuration
 .env
+
+# built binaries
+main
+sample

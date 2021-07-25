@@ -1,8 +1,10 @@
 package main
 
 import (
-	"sample"
+	//sample2 "sample/sample"
+	"sample/sample"
 
+	//"github.com/grdlsample/sample"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

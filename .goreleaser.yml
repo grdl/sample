@@ -1,0 +1,63 @@
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: sample
+    main: ./cmd/sample/main.go
+    ldflags:
+      - -s -w
+      - -X sample/sample.version={{.Version}}
+      - -X sample/sample.commit={{.Commit}}
+      - -X sample/sample.date={{.Date}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+
+
+archives:
+  - id: archive
+    builds:
+      - sample
+    replacements:
+      darwin: macOS
+      linux: linux
+      windows: windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+    # Don't include any additional files into the archives (such as README, CHANGELOG etc).
+    files:
+      - none*
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  skip: true
+
+release:
+  github:
+    owner: grdl
+    name: sample
+
+brews:
+  - name: sample
+    tap:
+      owner: grdl
+      name: homebrew-tap
+    commit_author:
+      name: Greg Dlugoszewski
+      email: greg@grdl.dev
+    folder: Formula
+    homepage: https://github.com/grdl/sample/
+    description: "Sample :golang: Go application to be used as a base template for other projects."
+    test: |
+      system "sample --version"
+    install: |
+      bin.install "sample"

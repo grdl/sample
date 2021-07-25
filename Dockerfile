@@ -5,7 +5,7 @@ ARG date
 WORKDIR /src/
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o build/ \
-    -ldflags="-X sample.version=$version -X sample.commit=$commit -X sample.date=$date" \
+    -ldflags="-X sample/sample.version=$version -X sample/sample.commit=$commit -X sample/sample.date=$date" \
     ./...
 
 
