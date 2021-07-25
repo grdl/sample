@@ -20,3 +20,6 @@
 # built binaries
 main
 sample
+
+# Goreleaser dist directory
+dist/
