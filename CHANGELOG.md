@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+:point_up: Click on the link to see changes yet to be released. 
 
 ## [v0.0.3] - 2021-07-25
 ### Added
